@@ -1,5 +1,8 @@
 {
   "src": [
-    "pages/Index"
+    "pages/Index",
+    "pages/volunteer/set",
+    "pages/volunteer/volunteer_main",
+    "pages/elder/elder_main"
   ]
 }
