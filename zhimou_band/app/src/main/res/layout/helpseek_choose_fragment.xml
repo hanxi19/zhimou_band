@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:text="当前有一人求助"
+        android:textSize="25dp"
+        android:gravity="center"
+        android:layout_marginTop="50dp"/>
+
+    <TextView
+        android:id="@+id/help_seek_type_text"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:textSize="25dp"
+        android:layout_weight="0.3"
+        android:gravity="center"
+        android:text="类型：摔倒"/>
+
+    <TextView
+        android:id="@+id/help_seek_distance_text"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:textSize="25dp"
+        android:gravity="center"
+        android:text="距您2000米"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:paddingHorizontal="40dp">
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:text="接受"
+            android:layout_alignParentLeft="true"/>
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:text="拒绝"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"/>
+
+</LinearLayout>
