@@ -2,58 +2,87 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- 允许访问网络，必选权限 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 允许获取粗略位置，若用GPS实现定位小蓝点功能则必选 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 允许获取网络状态，用于网络定位，若无gps但仍需实现定位小蓝点功能则此权限必选 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 允许获取wifi网络信息，用于网络定位，若无gps但仍需实现定位小蓝点功能则此权限必选 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 允许获取wifi状态改变，用于网络定位，若无gps但仍需实现定位小蓝点功能则此权限必选 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 允许写入扩展存储，用于数据缓存，若无此权限则写到私有目录 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 允许写设备缓存，用于问题排查 -->
+    <!-- <uses-permission android:name="android.permission.WRITE_SETTINGS" /> -->
+    <!-- 允许读设备等信息，用于问题排查 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 允许访问网络，必选权限 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 允许获取网络状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 允许获取wifi网络信息 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 允许写入扩展存储，用于搜索结果缓存，若无此权限则写到私有目录 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 允许写设备缓存，用于问题排查 -->
+    <!-- <uses-permission android:name="android.permission.WRITE_SETTINGS" /> -->
+    <!-- 允许读设备等信息，用于问题排查 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 允许程序打开网络套接字 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 允许程序设置内置sd卡的写权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 允许程序获取网络状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 允许程序访问WiFi网络信息 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 允许程序访问CellID或WiFi热点来获取粗略的位置 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!--用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+    <!--用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <!--用于获取运营商信息，用于支持提供运营商信息相关的接口-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <!--用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+    <!--用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <!--用于访问网络，网络定位需要上网-->
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <!--用于写入缓存数据到扩展存储卡-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <!--用于申请调用A-GPS模块-->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"></uses-permission>
+    <!--如果设置了target >= 28 如果需要启动后台定位则必须声明这个权限-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <!--允许访问网络，必选权限-->
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!--允许获取粗略位置，若用GPS实现定位小蓝点功能则必选-->
+    <!--允许获取精确位置，实时导航为必选-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!--允许获取粗略位置，实时导航为必选-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-    <!--允许获取网络状态，用于网络定位，若无gps但仍需实现定位小蓝点功能则此权限必选-->
+    <!--允许获取网络状态，用于网络定位（无gps情况下的定位），若需网络定位功能则必选-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <!--允许获取wifi网络信息，用于网络定位，若无gps但仍需实现定位小蓝点功能则此权限必选-->
+    <!--允许获取wifi网络信息，用于网络定位（无gps情况下的定位），若需网络定位功能则必选-->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-    <!--允许获取wifi状态改变，用于网络定位，若无gps但仍需实现定位小蓝点功能则此权限必选-->
+    <!--允许获取wifi状态改变，用于网络定位（无gps情况下的定位），若需网络定位功能则必选-->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
-    <!--允许写入扩展存储，用于数据缓存，若无此权限则写到私有目录-->
+    <!--后台获取位置信息，若需后台定位或持续导航则必选-->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
+    <!--用于申请调用A-GPS模块,卫星定位加速-->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+
+    <!--允许写入扩展存储，用于写入缓存定位数据-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!--用于用户链接蓝牙时，在导航组件页面的蓝牙连接提醒，建立链接后开发者可选用蓝牙通道进行tts播报-->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+
+    <!--用与导航状态中保持屏幕常亮-->
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <!--允许写设备缓存，用于问题排查-->
 <!--    <uses-permission android:name="android.permission.WRITE_SETTINGS" />-->
 
     <!--允许读设备等信息，用于问题排查-->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <!--允许访问网络，必选权限-->
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!--允许获取网络状态-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <!--允许获取wifi网络信息-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
-    <!--允许写入扩展存储，用于搜索结果缓存，若无此权限则写到私有目录-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <!--允许写设备缓存，用于问题排查-->
-<!--    <uses-permission android:name="android.permission.WRITE_SETTINGS" />-->
-
-    <!--允许读设备等信息，用于问题排查-->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <!--允许程序打开网络套接字-->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!--允许程序设置内置sd卡的写权限-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!--允许程序获取网络状态-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!--允许程序访问WiFi网络信息-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!--允许程序访问CellID或WiFi热点来获取粗略的位置-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!--如果您的应用需要后台定位权限，且有可能运行在Android Q设备上,并且设置了target>28，必须增加这个权限声明-->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -65,10 +94,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Zhimou_band"
         tools:targetApi="31">
+        <service
+            android:name=".myService.myLocation"
+            android:enabled="true"
+            android:exported="true"></service>
+        <service android:name="com.amap.api.location.APSService"/>
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="b53390a121cc82eae705b5a386578e60"/>
+            android:value="1561f4e366d5298b11a84a4e632e8715" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -78,10 +113,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name="com.amap.api.location.APSService"></service>
+        <activity
+            android:name="com.amap.api.navi.AmapRouteActivity"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:configChanges="orientation|keyboardHidden|screenSize|navigation" />
+
+        <service android:name="com.amap.api.location.APSService" />
     </application>
-
-
-
 
 </manifest>
