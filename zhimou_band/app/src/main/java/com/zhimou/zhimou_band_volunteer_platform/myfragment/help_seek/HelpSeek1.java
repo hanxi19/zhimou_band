@@ -27,8 +27,9 @@ public class HelpSeek1 extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private static HelpSeek1 helpSeek1;
 
-    public HelpSeek1() {
+    private HelpSeek1() {
         // Required empty public constructor
     }
 
@@ -41,13 +42,12 @@ public class HelpSeek1 extends Fragment {
      * @return A new instance of fragment HelpSeek1.
      */
     // TODO: Rename and change types and number of parameters
-    public static HelpSeek1 newInstance(String param1, String param2) {
-        HelpSeek1 fragment = new HelpSeek1();
+    public static HelpSeek1 newInstance() {
+        if(helpSeek1==null)
+        helpSeek1 = new HelpSeek1();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        helpSeek1.setArguments(args);
+        return helpSeek1;
     }
 
     @Override

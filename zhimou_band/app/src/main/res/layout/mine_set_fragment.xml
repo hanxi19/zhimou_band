@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#8E8D8D"
     android:orientation="vertical"
     android:padding="30dp">
 
@@ -16,10 +16,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="开启消息通知"
+            android:textColor="@color/black"
             android:textSize="20dp"/>
         <Switch
             android:id="@+id/info_switch"
-            android:layout_width="20dp"
+            android:layout_width="100dp"
             android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:switchMinWidth="30dp"/>
@@ -35,13 +36,17 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="接收求助信息"
+            android:textColor="@color/black"
             android:textSize="20dp"/>
         <Switch
             android:id="@+id/receive_switch"
-            android:layout_width="20dp"
+            android:layout_width="100dp"
             android:layout_height="20dp"
             android:layout_alignParentRight="true"
-            android:switchMinWidth="30dp"/>
+            android:layout_centerVertical="true"
+            android:showText="true"
+            android:switchMinWidth="50dp"
+            android:switchTextAppearance="@color/black" />
     </RelativeLayout>
 
 </LinearLayout>

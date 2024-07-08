@@ -4,10 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import static com.amap.api.navi.AMapNavi.setApiKey;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,34 +29,36 @@ import com.amap.api.navi.AmapNaviPage;
 import com.amap.api.navi.AmapNaviParams;
 import com.amap.api.navi.AmapNaviType;
 import com.amap.api.navi.AmapPageType;
-import com.zhimou.zhimou_band_volunteer_platform.myService.myLocation;
+import com.zhimou.zhimou_band_volunteer_platform.myUtil.myHttp;
 import com.zhimou.zhimou_band_volunteer_platform.myfragment.main_page.MainPageFragment;
 import com.zhimou.zhimou_band_volunteer_platform.myfragment.mine.MineMain;
 
 public class MainActivity extends FragmentActivity {
     private static final int WRITE_COARSE_LOCATION_REQUEST_CODE = 0 ;
     private static final int REQUEST_LOCATION_PERMISSION = 0;
+    private final String GET_HELP_INFOR_URL="http://10.0.2.2:4523/m2/4623205-4273246-default/191549940";
     Button mainPageBt;
     Button helpSeekBt;
     Button mineBt;
     Intent mIntent;
     public Double latitude;
     public Double longitude;
+    public boolean existHelpSeek=false;
 
-    MyReceiver myReceiver;
-    class MyReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, final Intent intent) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    //获取从Service中传来的data
-                    latitude=intent.getDoubleExtra("latitude",0);
-                    longitude=intent.getDoubleExtra("longitude",0);
-                }
-            });
-        }
-    }
+//    MyReceiver myReceiver;
+//    class MyReceiver extends BroadcastReceiver {
+//        @Override
+//        public void onReceive(Context context, final Intent intent) {
+//            runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    //获取从Service中传来的data
+//                    latitude=intent.getDoubleExtra("latitude",0);
+//                    longitude=intent.getDoubleExtra("longitude",0);
+//                }
+//            });
+//        }
+//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -146,36 +145,31 @@ public class MainActivity extends FragmentActivity {
         helpSeekBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Bundle bundle=new Bundle();
-//                bundle.putDouble("latitude",latitude);
-//                bundle.putDouble("longitude",longitude);
-//                HelpSeek2 fg=new HelpSeek2();
-//                fg.setArguments(bundle);
-//                replaceFragment(fg);
+                myHttp.myGet(MainActivity.this,GET_HELP_INFOR_URL);
                 //构建导航组件配置类，没有传入起点，所以起点默认为 “我的位置”
                 //起点
-                AMapLocationClient.updatePrivacyShow(MainActivity.this, true, true);
-                AMapLocationClient.updatePrivacyAgree(MainActivity.this, true);
-                setApiKey(MainActivity.this, "1561f4e366d5298b11a84a4e632e8715");
-                Poi start = new Poi("北京首都机场", new LatLng(40.080525,116.603039), "B000A28DAE");
-//途经点
-//                List<Poi> poiList = new ArrayList();
-//                poiList.add(new Poi("故宫", new LatLng(39.918058,116.397026), "B000A8UIN8"));
-//终点
-                Poi end = new Poi("北京大学", new LatLng(39.941823,116.426319), "B000A816R6");
-// 组件参数配置
-                AmapNaviParams params = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER, AmapPageType.ROUTE);
-// 启动组件
-                AmapNaviPage.getInstance().showRouteActivity(getApplicationContext(), params, null);
-                //启动导航组件
-                AmapNaviPage.getInstance().showRouteActivity(getApplicationContext(), params, null);
+//                AMapLocationClient.updatePrivacyShow(MainActivity.this, true, true);
+//                AMapLocationClient.updatePrivacyAgree(MainActivity.this, true);
+//                setApiKey(MainActivity.this, "1561f4e366d5298b11a84a4e632e8715");
+//                Poi start = new Poi(null, null, "B000A28DAE");
+////途经点
+////                List<Poi> poiList = new ArrayList();
+////                poiList.add(new Poi("故宫", new LatLng(39.918058,116.397026), "B000A8UIN8"));
+////终点
+//                Poi end = new Poi(null, new LatLng(39.941823,116.426319), "B000A816R6");
+//// 组件参数配置
+//                AmapNaviParams params = new AmapNaviParams(null, null, end, AmapNaviType.DRIVER, AmapPageType.ROUTE);
+//// 启动组件
+//                AmapNaviPage.getInstance().showRouteActivity(getApplicationContext(), params, null);
+//                //启动导航组件
+//                AmapNaviPage.getInstance().showRouteActivity(getApplicationContext(), params, null);
             }
         });
 
         mineBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                replaceFragment(new MineMain());
+                replaceFragment(MineMain.newInstance(MainActivity.this));
             }
         });
     }

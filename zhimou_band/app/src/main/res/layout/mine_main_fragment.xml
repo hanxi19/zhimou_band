@@ -30,10 +30,12 @@
             android:textColor="@color/black"/>
 
         <Button
+            android:id="@+id/toset_bt"
             android:layout_width="0dp"
-            android:layout_weight="0.2"
-            android:layout_height="match_parent"
+            android:layout_weight="0.1"
+            android:layout_height="15dp"
             android:background="@drawable/arrow_right"
+            android:backgroundTint="#838383"
             />
     </LinearLayout>
 

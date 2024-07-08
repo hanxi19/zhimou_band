@@ -9,7 +9,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.zhimou.zhimou_band_volunteer_platform.myfragment.help_seek.HelpSeek2;
+import com.zhimou.zhimou_band_volunteer_platform.myfragment.help_seek.HelpSeek3;
 
 public class myLocation {
     //声明AMapLocationClient类对象
@@ -19,7 +19,7 @@ public class myLocation {
     //声明定位回调监听器
     public static AMapLocationListener mLocationListener ;
     //声明AMapLocationClientOption对象
-    static public void getLocation(Context context,HelpSeek2 helpSeek2){
+    static public void getLocation(Context context, HelpSeek3 helpSeek2){
         new Thread(){
             @Override
             public void run() {

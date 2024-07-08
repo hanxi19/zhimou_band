@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
+import com.zhimou.zhimou_band_volunteer_platform.MainActivity;
 import com.zhimou.zhimou_band_volunteer_platform.R;
 
 /**
@@ -20,6 +22,7 @@ public class MineMain extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static MainActivity context;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -38,12 +41,11 @@ public class MineMain extends Fragment {
      * @return A new instance of fragment MineMain.
      */
     // TODO: Rename and change types and number of parameters
-    public static MineMain newInstance(String param1, String param2) {
+    public static MineMain newInstance(MainActivity newContext) {
         MineMain fragment = new MineMain();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+        context=newContext;
         return fragment;
     }
 
@@ -61,6 +63,13 @@ public class MineMain extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.mine_main_fragment,container,false);
+        Button set= view.findViewById(R.id.toset_bt);
+        set.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                context.replaceFragment(MineSet.newInstance());
+            }
+        });
         return view;
     }
 }

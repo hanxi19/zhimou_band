@@ -41,6 +41,8 @@ dependencies {
     implementation libs.activity
     implementation libs.constraintlayout
     implementation files('libs\\AMap3DMap_10.0.700_AMapNavi_10.0.700_AMapSearch_9.7.2_AMapLocation_6.4.5_20240508.jar')
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+    implementation 'com.alibaba:fastjson:1.2.61'
     //implementation files('src\\main\\jniLibs\\AMap3DMap_10.0.700_AMapNavi_10.0.700_AMapSearch_9.7.2_AMapLocation_6.4.5_20240508.jar')
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
