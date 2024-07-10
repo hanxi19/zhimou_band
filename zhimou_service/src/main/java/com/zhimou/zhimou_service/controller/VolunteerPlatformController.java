@@ -55,8 +55,12 @@ public class VolunteerPlatformController {
                 service.insertPoint();
             }
             service.addPoint(1+service.getPoint());
+            HelpSeek.clearLocator();
+            log.info("help finished");
+            log.info("Locator cleared");
         }else{
             HelpSeek.clearLocator();
+            log.info("help not finish");
             log.info("Locator cleared");
         }
         return Result.success(null);
