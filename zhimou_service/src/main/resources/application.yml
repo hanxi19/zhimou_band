@@ -1,0 +1,8 @@
+#server:
+#  port: 8080
+#spring:
+#  datasource:
+#    url: jdbc:mysql:aws://localhost:3306/mysql
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    password: root
+#    username: root
