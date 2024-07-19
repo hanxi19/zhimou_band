@@ -32,6 +32,8 @@ import com.amap.api.navi.AmapNaviParams;
 import com.amap.api.navi.AmapNaviType;
 import com.amap.api.navi.AmapPageType;
 import com.zhimou.zhimou_band_volunteer_platform.myUtil.myHttp;
+import com.zhimou.zhimou_band_volunteer_platform.myfragment.help_seek.HelpSeek2;
+import com.zhimou.zhimou_band_volunteer_platform.myfragment.help_seek.HelpSeek5;
 import com.zhimou.zhimou_band_volunteer_platform.myfragment.main_page.MainPageFragment;
 import com.zhimou.zhimou_band_volunteer_platform.myfragment.mine.MineMain;
 
@@ -153,8 +155,12 @@ public class MainActivity extends FragmentActivity {
                 mainPageBt.setBackground(getResources().getDrawable(R.drawable.main_page));
                 helpSeekBt.setBackground(getResources().getDrawable(R.drawable.helpseek_black));
                 mineBt.setBackground(getResources().getDrawable(R.drawable.mine));
-                //获取求助信息
-                myHttp.myGet(MainActivity.this,GET_HELP_INFOR_URL);
+                if(HelpSeek2.isArrive==false&&HelpSeek2.isFinish==false) {
+                    //获取求助信息
+                    myHttp.myGet(MainActivity.this, GET_HELP_INFOR_URL);
+                }else if(HelpSeek2.isArrive==true&&HelpSeek2.isFinish==false){
+                    replaceFragment(new HelpSeek5());
+                }
                 //构建导航组件配置类，没有传入起点，所以起点默认为 “我的位置”
                 //起点
 //                AMapLocationClient.updatePrivacyShow(MainActivity.this, true, true);

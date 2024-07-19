@@ -42,8 +42,8 @@ public class HelpSeek2 extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static MainActivity context;
-    boolean isArrive =false;
-    boolean isFinish=false;
+    public static boolean isArrive =false;
+    public static boolean isFinish=false;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -125,13 +125,8 @@ public class HelpSeek2 extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-//        if(isArrive==false&&isFinish==false){
-//            context.replaceFragment(HelpSeek1.newInstance());
-//        }else if(isArrive==true&&is){
-//
-//        }
         if(isArrive==true){
-            context.replaceFragment(new HelpSeek4());
+            context.replaceFragment(new HelpSeek4(context));
         }
         Log.e(TAG,"onResume");
     }
