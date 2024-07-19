@@ -2,13 +2,16 @@ package com.zhimou.zhimou_band_volunteer_platform.myfragment.main_page;
 
 import static android.content.ContentValues.TAG;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextPaint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.fragment.app.Fragment;
 
 import com.zhimou.zhimou_band_volunteer_platform.R;
@@ -66,7 +69,11 @@ public class MainPageFragment extends Fragment {
                              Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.text_fragment, container, false);
         TextView textView=view.findViewById(R.id.text_fragment_text);
-        textView.setText("Hi,志愿者");
+        textView.setText("Hi，志愿者");
+        TextPaint paint = textView.getPaint();
+        paint.setFakeBoldText(true);
+        paint.setColor(0x696969);
+        textView.setTextSize(50);
         Log.e(TAG, "onCreateView: finished" );
         // Inflate the layout for this fragment
         return view;

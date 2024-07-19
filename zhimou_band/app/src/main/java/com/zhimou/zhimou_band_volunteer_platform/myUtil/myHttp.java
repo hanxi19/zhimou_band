@@ -1,6 +1,9 @@
 package com.zhimou.zhimou_band_volunteer_platform.myUtil;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.os.Bundle;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -18,7 +21,28 @@ import okhttp3.Response;
 
 public class myHttp {
     static OkHttpClient client = new OkHttpClient();
-    private final static String GET_HELP_INFOR_URL="http://10.0.2.2:4523/m2/4623205-4273246-default/191549940";
+    private final static String GET_HELP_INFOR_URL="http://39.105.127.195:8082/get_help_infor";
+    private final static String IS_ACCEPT_URL="http://39.105.127.195:8082/is_accept?isAccept=true";
+    private final static String NOT_ACCEPT_URL="http://39.105.127.195:8082/is_accept?isAccept=false";
+    public static void myGet(String url){
+        if(url.equals(IS_ACCEPT_URL)||url.equals(NOT_ACCEPT_URL)) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .build();
+                    try {
+                        Response response = client.newCall(request).execute();
+                        String body=response.body().string();
+                        //Log.i(TAG, "responseBody "+response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
+    }
     public static void myGet(MainActivity context,String url) {
         if(Objects.equals(url, GET_HELP_INFOR_URL)) {
             new Thread(new Runnable() {

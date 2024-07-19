@@ -2,13 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#8E8D8D"
+    android:background="@mipmap/set_background"
     android:orientation="vertical"
     android:padding="30dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
+        android:background="@drawable/helpseek_window_shape"
         android:orientation="horizontal"
         android:layout_marginVertical="20dp">
 
@@ -17,19 +18,23 @@
             android:layout_height="match_parent"
             android:text="开启消息通知"
             android:textColor="@color/black"
-            android:textSize="20dp"/>
+            android:textSize="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"/>
         <Switch
             android:id="@+id/info_switch"
             android:layout_width="100dp"
             android:layout_height="20dp"
             android:layout_alignParentRight="true"
-            android:switchMinWidth="30dp"/>
+            android:switchMinWidth="30dp"
+            android:layout_marginTop="5dp"/>
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:orientation="horizontal"
+        android:background="@drawable/helpseek_window_shape"
         android:layout_marginVertical="20dp">
 
         <TextView
@@ -37,7 +42,9 @@
             android:layout_height="match_parent"
             android:text="接收求助信息"
             android:textColor="@color/black"
-            android:textSize="20dp"/>
+            android:textSize="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"/>
         <Switch
             android:id="@+id/receive_switch"
             android:layout_width="100dp"
@@ -46,7 +53,8 @@
             android:layout_centerVertical="true"
             android:showText="true"
             android:switchMinWidth="50dp"
-            android:switchTextAppearance="@color/black" />
+            android:switchTextAppearance="@color/black"
+            android:layout_marginTop="5dp"/>
     </RelativeLayout>
 
 </LinearLayout>

@@ -20,7 +20,9 @@ import com.amap.api.maps.MapsInitializer;
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.zhimou.zhimou_band_volunteer_platform.R;
-
+/************************************************
+ * 原导航页面，已废弃
+ * *********************************************/
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link HelpSeek3#newInstance} factory method to

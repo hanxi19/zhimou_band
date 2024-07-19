@@ -4,22 +4,35 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="30dp"
-    android:background="@color/white">
-
-    <TextView
-        android:id="@+id/mine_point_text"
+    android:background="@mipmap/set_background"
+    >
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:text="积分： 15"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
         android:layout_marginVertical="20dp"
-        android:textColor="@color/black"/>
+        android:background="@drawable/helpseek_window_shape"
+        android:gravity="center_vertical">
+        <TextView
+            android:id="@+id/mine_point_text"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textSize="20dp"
+            android:text="积分： 15"
+            android:layout_marginVertical="20dp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/helpseek_window_shape"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:orientation="horizontal"
-        android:layout_marginVertical="20dp">
+        android:layout_marginVertical="20dp"
+        android:background="@drawable/helpseek_window_shape"
+        android:gravity="center_vertical">
 
         <TextView
             android:layout_width="0dp"
@@ -27,13 +40,15 @@
             android:layout_weight="0.8"
             android:textSize="20dp"
             android:text="设置"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:layout_marginLeft="10dp"
+            />
 
         <Button
             android:id="@+id/toset_bt"
             android:layout_width="0dp"
             android:layout_weight="0.1"
-            android:layout_height="15dp"
+            android:layout_height="20dp"
             android:background="@drawable/arrow_right"
             android:backgroundTint="#838383"
             />
