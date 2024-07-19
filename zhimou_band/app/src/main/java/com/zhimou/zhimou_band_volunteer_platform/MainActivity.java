@@ -1,143 +1,102 @@
 package com.zhimou.zhimou_band_volunteer_platform;
 
-import static android.content.ContentValues.TAG;
-
-import static com.amap.api.navi.AMapNavi.setApiKey;
-
-import android.content.Intent;
+import android.Manifest;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
-import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.Manifest;
 import android.widget.Toast;
 
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorManager;
+import android.hardware.SensorEventListener;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
+
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.fragment.app.FragmentActivity;
 
 import com.amap.api.location.AMapLocationClient;
-
-import com.amap.api.maps.model.LatLng;
-import com.amap.api.maps.model.Poi;
-import com.amap.api.navi.AmapNaviPage;
-import com.amap.api.navi.AmapNaviParams;
-import com.amap.api.navi.AmapNaviType;
-import com.amap.api.navi.AmapPageType;
-import com.zhimou.zhimou_band_volunteer_platform.myUtil.myHttp;
-import com.zhimou.zhimou_band_volunteer_platform.myfragment.help_seek.HelpSeek2;
-import com.zhimou.zhimou_band_volunteer_platform.myfragment.help_seek.HelpSeek5;
 import com.zhimou.zhimou_band_volunteer_platform.myfragment.main_page.MainPageFragment;
-import com.zhimou.zhimou_band_volunteer_platform.myfragment.mine.MineMain;
 
-public class MainActivity extends FragmentActivity {
-    private static final int WRITE_COARSE_LOCATION_REQUEST_CODE = 0 ;
+public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_LOCATION_PERMISSION = 0;
-    private final String GET_HELP_INFOR_URL="http://39.105.127.195:8082/get_help_infor";
-    Button mainPageBt;
-    Button helpSeekBt;
-    Button mineBt;
-    Intent mIntent;
+    private static final int REQUEST_BODY_SENSOR_PERMISSION = 1;
+
+    private Button mainPageBt;
+    private Button helpSeekBt;
+    private Button mineBt;
+    private Intent mIntent;
     public Double latitude;
     public Double longitude;
-    public boolean existHelpSeek=false;
+    public boolean existHelpSeek = false;
 
-//    MyReceiver myReceiver;
-//    class MyReceiver extends BroadcastReceiver {
-//        @Override
-//        public void onReceive(Context context, final Intent intent) {
-//            runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    //获取从Service中传来的data
-//                    latitude=intent.getDoubleExtra("latitude",0);
-//                    longitude=intent.getDoubleExtra("longitude",0);
-//                }
-//            });
-//        }
-//    }
+    private SensorManager sensorManager;
+    private Sensor accelerometer;
+    private SensorEventListener sensorEventListener;
+    private long lastPeakTime = 0;
+    private int peakCount = 0;
+    private static final int PEAK_THRESHOLD = 10; // 加速度峰值阈值
+    private static final int PEAK_FREQUENCY = 100; // 峰值频率阈值
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_LOCATION_PERMISSION) {
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                    && grantResults[1] == PackageManager.PERMISSION_GRANTED
-                    && grantResults[2] == PackageManager.PERMISSION_GRANTED
-                    && grantResults[3] == PackageManager.PERMISSION_GRANTED) {
-                // 定位权限申请成功，进入步骤四：开始使用定位功能
-            } else {
-                // 定位权限申请失败，可以显示一个提示信息给用户
-                Toast.makeText(this, "定位权限申请失败", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mainPageBt =findViewById(R.id.main_page_bt);
+
+        mainPageBt = findViewById(R.id.main_page_bt);
         helpSeekBt = findViewById(R.id.help_seek_bt);
-        mineBt =findViewById(R.id.mine_bt);
+        mineBt = findViewById(R.id.mine_bt);
+
         AMapLocationClient.updatePrivacyShow(this, true, true);
         AMapLocationClient.updatePrivacyAgree(this, true);
 
-        // 检查应用是否已经授权定位权限
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED) {
-            // 应用已经被授权定位权限，可以进行定位操作
-            // 进入步骤四：开始使用定位功能
-        } else {
-            // 应用未被授权定位权限，进入步骤二：请求获取定位权限
-            // 请求获取定位权限
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION ,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE},
-                    REQUEST_LOCATION_PERMISSION);
-        }
+        // 初始化传感器管理器
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorEventListener=new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent event) {
+                float x=event.values[0];
+                float y=event.values[1];
+                float z=event.values[2];
+                float maxValue = Math.max(Math.abs(x), Math.max(Math.abs(y), Math.abs(z)));
+                if (maxValue > PEAK_THRESHOLD) {
+                    long currentTime = System.currentTimeMillis();
+                    if (currentTime - lastPeakTime > 100) { // 100毫秒内达到峰值
+                        peakCount++;
+                        lastPeakTime = currentTime;
+                    }
+                }
+            }
 
-//        mIntent = new Intent(this, myLocation.class);
-//        startService(mIntent);
-//        myReceiver = new MyReceiver();
-//        IntentFilter intentFilter = new IntentFilter();
-//        intentFilter.addAction(myLocation.ACTION_NAME);
-//        //注册广播
-//        registerReceiver(myReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED);
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+                //精度变化时的处理
+            }
+        };
+        sensorManager.registerListener(sensorEventListener,accelerometer,SensorManager.SENSOR_DELAY_NORMAL);
 
-//        new Thread(){
-//            @Override
-//            public void run() {
-//                super.run();
-//                String str;
-//                try {
-//                    myLocation.getLocation(MainActivity.this);
-//                    while (address==null){
-//                        sleep(100);
-//                    }
-//                } catch (InterruptedException e) {
-//                    throw new RuntimeException(e);
-//                }
-//                Log.e(TAG, "onCreate: "+address);
-//            }
-//        }.start();
+        // 检查并请求权限
+        checkAndRequestPermissions();
 
-        FragmentManager fragmentManager=getSupportFragmentManager();
-        FragmentTransaction Transaction=fragmentManager.beginTransaction();
-        Transaction.replace(R.id.fragment_container,new MainPageFragment());
-        Transaction.commit();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, new MainPageFragment());
+        transaction.commit();
 
         mainPageBt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,29 +114,8 @@ public class MainActivity extends FragmentActivity {
                 mainPageBt.setBackground(getResources().getDrawable(R.drawable.main_page));
                 helpSeekBt.setBackground(getResources().getDrawable(R.drawable.helpseek_black));
                 mineBt.setBackground(getResources().getDrawable(R.drawable.mine));
-                if(HelpSeek2.isArrive==false&&HelpSeek2.isFinish==false) {
-                    //获取求助信息
-                    myHttp.myGet(MainActivity.this, GET_HELP_INFOR_URL);
-                }else if(HelpSeek2.isArrive==true&&HelpSeek2.isFinish==false){
-                    replaceFragment(new HelpSeek5());
-                }
-                //构建导航组件配置类，没有传入起点，所以起点默认为 “我的位置”
-                //起点
-//                AMapLocationClient.updatePrivacyShow(MainActivity.this, true, true);
-//                AMapLocationClient.updatePrivacyAgree(MainActivity.this, true);
-//                setApiKey(MainActivity.this, "1561f4e366d5298b11a84a4e632e8715");
-//                Poi start = new Poi(null, null, "B000A28DAE");
-////途经点
-////                List<Poi> poiList = new ArrayList();
-////                poiList.add(new Poi("故宫", new LatLng(39.918058,116.397026), "B000A8UIN8"));
-////终点
-//                Poi end = new Poi(null, new LatLng(39.941823,116.426319), "B000A816R6");
-//// 组件参数配置
-//                AmapNaviParams params = new AmapNaviParams(null, null, end, AmapNaviType.DRIVER, AmapPageType.ROUTE);
-//// 启动组件
-//                AmapNaviPage.getInstance().showRouteActivity(getApplicationContext(), params, null);
-//                //启动导航组件
-//                AmapNaviPage.getInstance().showRouteActivity(getApplicationContext(), params, null);
+                // 获取求助信息
+                // myHttp.myGet(MainActivity.this, GET_HELP_INFOR_URL);
             }
         });
 
@@ -187,17 +125,83 @@ public class MainActivity extends FragmentActivity {
                 mainPageBt.setBackground(getResources().getDrawable(R.drawable.main_page));
                 helpSeekBt.setBackground(getResources().getDrawable(R.drawable.helpseek));
                 mineBt.setBackground(getResources().getDrawable(R.drawable.mine_black));
-                replaceFragment(MineMain.newInstance(MainActivity.this));
+                replaceFragment(MainPageFragment.newInstance());
             }
         });
     }
 
-    public void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager=getSupportFragmentManager();
-        FragmentTransaction Transaction=fragmentManager.beginTransaction();
-        Transaction.replace(R.id.fragment_container,fragment);
-        Transaction.commit();
-        Log.e(TAG, "replaceFragment: commit fibished");
+    private void checkAndRequestPermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_LOCATION_PERMISSION);
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BODY_SENSORS)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.BODY_SENSORS},
+                    REQUEST_BODY_SENSOR_PERMISSION);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_LOCATION_PERMISSION) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // 定位权限申请成功，进入步骤四：开始使用定位功能
+            } else {
+                // 定位权限申请失败，可以显示一个提示信息给用户
+                Toast.makeText(this, "定位权限申请失败", Toast.LENGTH_SHORT).show();
+            }
+        } else if (requestCode == REQUEST_BODY_SENSOR_PERMISSION) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // 传感器权限申请成功，注册传感器监听器
+                sensorManager.registerListener(new SensorEventListener() {
+                    @Override
+                    public void onSensorChanged(SensorEvent event) {
+                        float x = event.values[0];
+                        float y = event.values[1];
+                        float z = event.values[2];
+                        float maxValue = Math.max(Math.abs(x), Math.max(Math.abs(y), Math.abs(z)));
+
+                        if (maxValue > PEAK_THRESHOLD) {
+                            long currentTime = System.currentTimeMillis();
+                            if (currentTime - lastPeakTime > 100) { // 100毫秒内达到峰值
+                                peakCount++;
+                                lastPeakTime = currentTime;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+                        // 精度变化时的处理
+                    }
+                }, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+            } else {
+                // 传感器权限申请失败，可以显示一个提示信息给用户
+                Toast.makeText(this, "传感器权限申请失败", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    public void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.commit();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (sensorManager != null&&accelerometer!=null&&sensorEventListener!=null) {
+            sensorManager.unregisterListener(sensorEventListener,accelerometer);
+        }
     }
 }
-
