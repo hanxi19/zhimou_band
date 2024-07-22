@@ -1,0 +1,5 @@
+# Created at 2024-07-21T08:53:57.393
+Boot Manifest-JAR contains absolute paths in classpath 'E:\develop\github\zhimou_band\zhimou_service\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+'other' has different root
+
