@@ -34,13 +34,13 @@ import com.amap.api.navi.AmapPageType;
 import com.zhimou.zhimou_band_volunteer_platform.myUtil.myHttp;
 import com.zhimou.zhimou_band_volunteer_platform.myfragment.help_seek.HelpSeek2;
 import com.zhimou.zhimou_band_volunteer_platform.myfragment.help_seek.HelpSeek5;
+import com.zhimou.zhimou_band_volunteer_platform.myfragment.help_seek.HelpSeek6;
 import com.zhimou.zhimou_band_volunteer_platform.myfragment.main_page.MainPageFragment;
 import com.zhimou.zhimou_band_volunteer_platform.myfragment.mine.MineMain;
 
 public class MainActivity extends FragmentActivity {
     private static final int WRITE_COARSE_LOCATION_REQUEST_CODE = 0 ;
     private static final int REQUEST_LOCATION_PERMISSION = 0;
-    private final String GET_HELP_INFOR_URL="http://39.105.127.195:8082/get_help_infor";
     Button mainPageBt;
     Button helpSeekBt;
     Button mineBt;
@@ -136,8 +136,9 @@ public class MainActivity extends FragmentActivity {
 
         FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentTransaction Transaction=fragmentManager.beginTransaction();
-        Transaction.replace(R.id.fragment_container,new MainPageFragment());
+        Transaction.replace(R.id.fragment_container,MainPageFragment.newInstance());
         Transaction.commit();
+        mainPageBt.setBackground(getResources().getDrawable(R.drawable.main_page_black));
 
         mainPageBt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,9 +158,9 @@ public class MainActivity extends FragmentActivity {
                 mineBt.setBackground(getResources().getDrawable(R.drawable.mine));
                 if(HelpSeek2.isArrive==false&&HelpSeek2.isFinish==false) {
                     //获取求助信息
-                    myHttp.myGet(MainActivity.this, GET_HELP_INFOR_URL);
+                    myHttp.myGet(MainActivity.this, myHttp.GET_HELP_INFOR_URL);
                 }else if(HelpSeek2.isArrive==true&&HelpSeek2.isFinish==false){
-                    replaceFragment(new HelpSeek5());
+                    replaceFragment(new HelpSeek5(MainActivity.this));
                 }
                 //构建导航组件配置类，没有传入起点，所以起点默认为 “我的位置”
                 //起点
@@ -187,7 +188,8 @@ public class MainActivity extends FragmentActivity {
                 mainPageBt.setBackground(getResources().getDrawable(R.drawable.main_page));
                 helpSeekBt.setBackground(getResources().getDrawable(R.drawable.helpseek));
                 mineBt.setBackground(getResources().getDrawable(R.drawable.mine_black));
-                replaceFragment(MineMain.newInstance(MainActivity.this));
+                //replaceFragment(MineMain.newInstance(MainActivity.this));
+                myHttp.myGet(MainActivity.this,myHttp.GET_POINT_URL);
             }
         });
     }

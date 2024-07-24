@@ -24,12 +24,12 @@ public class VolunteerPlatformController {
             return Result.success(new LatLon(HelpSeek.getLatitude(), HelpSeek.getLongitude(),true));
         }
     }
-    @GetMapping("/navi_finished")
-    public Result naviFinished(){
-        HelpSeek.arrive();
-        log.info("navifinished");
-        return Result.success(null);
-    }
+//    @GetMapping("/navi_finished")
+//    public Result naviFinished(){
+//        HelpSeek.arrive();
+//        log.info("navifinished");
+//        return Result.success(null);
+//    }
     @GetMapping("/point")
     public Result point(){
         return Result.success(service.getPoint());
@@ -48,21 +48,38 @@ public class VolunteerPlatformController {
         log.info("Locator cleared");
         return Result.success(null);
     }
-    @GetMapping("/help_finished")
-    public Result helpFinished(boolean finished){
-        if(finished){
-            if(service.getPoint()==null){
-                service.insertPoint();
-            }
-            service.addPoint(1+service.getPoint());
+//    @GetMapping("/help_finished")
+//    public Result helpFinished(boolean finished){
+//        if(finished){
+//            if(service.getPoint()==null){
+//                service.insertPoint();
+//            }
+//            service.addPoint(1+service.getPoint());
+//            HelpSeek.clearLocator();
+//            log.info("help finished");
+//            log.info("Locator cleared");
+//        }else{
+//            HelpSeek.clearLocator();
+//            log.info("help not finish");
+//            log.info("Locator cleared");
+//        }
+//        return Result.success(null);
+//    }
+    @GetMapping("/get_help_finished")
+    public Result getHelpFinished(){
+        if(HelpSeek.getFinished()==2){
             HelpSeek.clearLocator();
-            log.info("help finished");
             log.info("Locator cleared");
-        }else{
+            return Result.success(2);
+        } else if (HelpSeek.getFinished()==1) {
             HelpSeek.clearLocator();
-            log.info("help not finish");
             log.info("Locator cleared");
+            return Result.success(1);
         }
-        return Result.success(null);
+        return Result.success(HelpSeek.getFinished());
+    }
+    @GetMapping("/get_navi_finished")
+    public Result getNaviFinished(){
+        return Result.success(HelpSeek.getArrive());
     }
 }

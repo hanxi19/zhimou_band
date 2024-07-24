@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -41,9 +42,10 @@ public class MineMain extends Fragment {
      * @return A new instance of fragment MineMain.
      */
     // TODO: Rename and change types and number of parameters
-    public static MineMain newInstance(MainActivity newContext) {
+    public static MineMain newInstance(MainActivity newContext,int point) {
         MineMain fragment = new MineMain();
         Bundle args = new Bundle();
+        args.putInt("point",point);
         fragment.setArguments(args);
         context=newContext;
         return fragment;
@@ -64,10 +66,12 @@ public class MineMain extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.mine_main_fragment,container,false);
         Button set= view.findViewById(R.id.toset_bt);
+        TextView text=view.findViewById(R.id.mine_point_text);
+        text.setText("积分："+getArguments().getInt("point"));
         set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.replaceFragment(MineSet.newInstance());
+                context.replaceFragment(MineSet.newInstance(context));
             }
         });
         return view;

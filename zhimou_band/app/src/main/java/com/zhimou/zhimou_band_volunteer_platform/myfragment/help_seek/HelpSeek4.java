@@ -94,7 +94,7 @@ public class HelpSeek4 extends Fragment {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                mainActivity.replaceFragment(new HelpSeek5());
+                mainActivity.replaceFragment(new HelpSeek5(mainActivity));
             }
         }).start();
     }

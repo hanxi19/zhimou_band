@@ -13,9 +13,11 @@ public class VolunteerPlatformService1 implements VolunteerPlatformService {
     public Integer getPoint() {
         return mapper.getPoint();
     }
+    @Override
     public void addPoint(Integer point){
         mapper.addPoint(point);
     }
+    @Override
     public void insertPoint(){
         mapper.insertPoint();
     }

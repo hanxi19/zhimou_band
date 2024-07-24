@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.zhimou.zhimou_band_volunteer_platform.MainActivity;
 import com.zhimou.zhimou_band_volunteer_platform.R;
 
 /**
@@ -24,6 +25,7 @@ public class MineSet extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private static MainActivity context;
 
     public MineSet() {
         // Required empty public constructor
@@ -38,10 +40,11 @@ public class MineSet extends Fragment {
      * @return A new instance of fragment MineSet.
      */
     // TODO: Rename and change types and number of parameters
-    public static MineSet newInstance() {
+    public static MineSet newInstance(MainActivity newContext) {
         MineSet fragment = new MineSet();
         Bundle args = new Bundle();
         fragment.setArguments(args);
+        context=newContext;
         return fragment;
     }
 

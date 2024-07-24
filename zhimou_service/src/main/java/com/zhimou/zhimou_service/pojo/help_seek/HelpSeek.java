@@ -4,7 +4,7 @@ public class HelpSeek {
     private static Double latitude;
     private static Double longitude;
     private static boolean isArrive=false;
-    private static boolean actFinished=false;
+    private static int actFinished=0; //0:判断中 1:完成 2:未完成
     private HelpSeek(){}
     private HelpSeek(Double newLatitude, Double newLongitude){
         latitude=newLatitude;
@@ -20,12 +20,13 @@ public class HelpSeek {
         isArrive=true;
     }
     public static void finish(){
-        actFinished=true;
+        actFinished=1;
     }
+    public static void notFinish(){actFinished=2;}
     public static boolean getArrive(){
         return isArrive;
     }
-    public static boolean getFinished(){
+    public static int getFinished(){
         return actFinished;
     }
     public static void setLoacator(Double latitude,Double longitude){
@@ -34,7 +35,7 @@ public class HelpSeek {
     public static void clearLocator(){
         LocatorHolder.instance=null;
         isArrive=false;
-        actFinished=false;
+        actFinished=0;
     }
     public static HelpSeek getLocator(){
         return LocatorHolder.instance;
