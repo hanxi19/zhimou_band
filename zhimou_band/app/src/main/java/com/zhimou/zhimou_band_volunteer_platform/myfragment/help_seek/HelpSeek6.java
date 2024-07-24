@@ -11,14 +11,14 @@ import android.widget.TextView;
 
 import com.zhimou.zhimou_band_volunteer_platform.R;
 /************************************************
- * 动作检测页面
+ * 动作检测成功页面
  * *********************************************/
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link HelpSeek5#newInstance} factory method to
+ * Use the {@link HelpSeek6#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HelpSeek5 extends Fragment {
+public class HelpSeek6 extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,7 +29,7 @@ public class HelpSeek5 extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public HelpSeek5() {
+    public HelpSeek6() {
         // Required empty public constructor
     }
 
@@ -39,11 +39,11 @@ public class HelpSeek5 extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment HelpSeek5.
+     * @return A new instance of fragment HelpSeek6.
      */
     // TODO: Rename and change types and number of parameters
-    public static HelpSeek5 newInstance(String param1, String param2) {
-        HelpSeek5 fragment = new HelpSeek5();
+    public static HelpSeek6 newInstance(String param1, String param2) {
+        HelpSeek6 fragment = new HelpSeek6();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -63,10 +63,10 @@ public class HelpSeek5 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.text_fragment, container, false);
         // Inflate the layout for this fragment
-        TextView text = view.findViewById(R.id.text_fragment_text);
-        text.setText("帮助中，请等待系统评判");
+        View view= inflater.inflate(R.layout.text_fragment, container, false);
+        TextView text=view.findViewById(R.id.text_fragment_text);
+        text.setText("动作检测合格，积分+1");
         return view;
     }
 }
