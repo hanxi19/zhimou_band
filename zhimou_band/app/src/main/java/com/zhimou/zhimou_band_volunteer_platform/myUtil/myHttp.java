@@ -73,15 +73,16 @@ public class myHttp {
                         if(json.getJSONObject("data").getBoolean("existHelpSeek")) {
                             context.latitude = json.getJSONObject("data").getDouble("latitude");
                             context.longitude = json.getJSONObject("data").getDouble("longitude");
+                            context.normalType= json.getJSONObject("data").getObject("normalType",Integer.class);
                             context.existHelpSeek=true;
 
                             Bundle bundle=new Bundle();
                             bundle.putDouble("latitude",context.latitude);
                             bundle.putDouble("longitude",context.longitude);
-                            HelpSeek2 fg=HelpSeek2.newInstance(context);
+                            HelpSeek2 fg=HelpSeek2.newInstance(context,context.normalType);
                             fg.setArguments(bundle);
+                            context.curHelpSeek=fg;
                             context.replaceFragment(fg);
-
                         }
                         else {
                             context.existHelpSeek=false;
@@ -131,9 +132,11 @@ public class myHttp {
                             Integer isFinished = json.getInteger("data");
                             Log.e(TAG,"isFinished:"+isFinished);
                             if (isFinished.equals(1)) {
+                                context.curHelpSeek=HelpSeek6.newInstance(context, true);
                                 context.replaceFragment(HelpSeek6.newInstance(context, true));
                                 break;
                             } else if (isFinished.equals(2)) {
+                                context.curHelpSeek=HelpSeek6.newInstance(context, false);
                                 context.replaceFragment(HelpSeek6.newInstance(context, false));
                                 break;
                             }

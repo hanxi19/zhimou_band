@@ -81,7 +81,8 @@ public class HelpSeek6 extends Fragment {
         view.findViewById(R.id.help_finish_fragment_bt).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                context.replaceFragment(HelpSeek1.newInstance());
+                context.curHelpSeek=HelpSeek1.newInstance();
+                context.replaceFragment(context.curHelpSeek);
             }
         });
         return view;

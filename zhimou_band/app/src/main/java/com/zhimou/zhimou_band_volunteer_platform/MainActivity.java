@@ -32,6 +32,7 @@ import com.amap.api.navi.AmapNaviParams;
 import com.amap.api.navi.AmapNaviType;
 import com.amap.api.navi.AmapPageType;
 import com.zhimou.zhimou_band_volunteer_platform.myUtil.myHttp;
+import com.zhimou.zhimou_band_volunteer_platform.myfragment.help_seek.HelpSeek1;
 import com.zhimou.zhimou_band_volunteer_platform.myfragment.help_seek.HelpSeek2;
 import com.zhimou.zhimou_band_volunteer_platform.myfragment.help_seek.HelpSeek5;
 import com.zhimou.zhimou_band_volunteer_platform.myfragment.help_seek.HelpSeek6;
@@ -48,6 +49,8 @@ public class MainActivity extends FragmentActivity {
     public Double latitude;
     public Double longitude;
     public boolean existHelpSeek=false;
+    public Integer normalType=null;
+    public Fragment curHelpSeek= HelpSeek1.newInstance();
 
 //    MyReceiver myReceiver;
 //    class MyReceiver extends BroadcastReceiver {
@@ -156,11 +159,11 @@ public class MainActivity extends FragmentActivity {
                 mainPageBt.setBackground(getResources().getDrawable(R.drawable.main_page));
                 helpSeekBt.setBackground(getResources().getDrawable(R.drawable.helpseek_black));
                 mineBt.setBackground(getResources().getDrawable(R.drawable.mine));
-                if(HelpSeek2.isArrive==false&&HelpSeek2.isFinish==false) {
+                if(curHelpSeek.getClass().equals(HelpSeek1.class)||curHelpSeek.getClass().equals(HelpSeek2.class)) {
                     //获取求助信息
                     myHttp.myGet(MainActivity.this, myHttp.GET_HELP_INFOR_URL);
-                }else if(HelpSeek2.isArrive==true&&HelpSeek2.isFinish==false){
-                    replaceFragment(new HelpSeek5(MainActivity.this));
+                }else {
+                    replaceFragment(curHelpSeek);
                 }
                 //构建导航组件配置类，没有传入起点，所以起点默认为 “我的位置”
                 //起点
