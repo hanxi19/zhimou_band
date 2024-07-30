@@ -26,6 +26,7 @@ public class VolunteerBandController {
                 service.insertPoint();
             }
             service.addPoint(1+service.getPoint());
+            HelpSeek.finish();
             log.info("help finished");
         }else{
             HelpSeek.notFinish();

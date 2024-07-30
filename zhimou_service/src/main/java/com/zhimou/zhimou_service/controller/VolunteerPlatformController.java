@@ -19,9 +19,14 @@ public class VolunteerPlatformController {
     @GetMapping("/get_help_infor")
     public Result getHelpInfor(){
         if(HelpSeek.getLocator()==null){
-            return Result.success(new LatLon(null,null,false));
+            return Result.success(new LatLon(null,null,false,null,null));
         }else {
-            return Result.success(new LatLon(HelpSeek.getLatitude(), HelpSeek.getLongitude(),true));
+            try {
+                return Result.success(new LatLon(HelpSeek.getLatitude(), HelpSeek.getLongitude(),true,HelpSeek.getHelpType(),HelpSeek.getNormalType()));
+            }catch (NullPointerException e){
+                return Result.success(new LatLon(HelpSeek.getLatitude(), HelpSeek.getLongitude(),true,HelpSeek.getHelpType(),null));
+            }
+
         }
     }
 //    @GetMapping("/navi_finished")

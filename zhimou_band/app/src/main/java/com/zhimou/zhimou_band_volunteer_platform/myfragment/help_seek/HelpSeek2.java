@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.amap.api.services.cloud.CloudSearch;
+import com.amap.api.services.poisearch.PoiSearch.SearchBound;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Poi;
@@ -20,6 +22,9 @@ import com.amap.api.navi.AmapNaviPage;
 import com.amap.api.navi.AmapNaviParams;
 import com.amap.api.navi.AmapNaviType;
 import com.amap.api.navi.AmapPageType;
+import com.amap.api.services.core.AMapException;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.poisearch.PoiSearch;
 import com.zhimou.zhimou_band_volunteer_platform.MainActivity;
 import com.zhimou.zhimou_band_volunteer_platform.R;
 import com.zhimou.zhimou_band_volunteer_platform.myUtil.myHttp;
@@ -104,12 +109,14 @@ public class HelpSeek2 extends Fragment {
                 AMapLocationClient.updatePrivacyShow(HelpSeek2.context, true, true);
                 AMapLocationClient.updatePrivacyAgree(HelpSeek2.context, true);
                 setApiKey(HelpSeek2.context, "1561f4e366d5298b11a84a4e632e8715");
-                Poi start = new Poi(null, null, "B000A28DAE");
+                Poi start = new Poi(null, null, null);
 //途经点
 //                List<Poi> poiList = new ArrayList();
 //                poiList.add(new Poi("故宫", new LatLng(39.918058,116.397026), "B000A8UIN8"));
 //终点
-                Poi end = new Poi(null, new LatLng(context.latitude,context.longitude), "B000A816R6");
+
+                Poi end = new Poi(null, new LatLng(context.latitude,context.longitude), null);
+                Log.e(TAG,(""+context.latitude)+" "+context.longitude);
 // 组件参数配置
                 AmapNaviParams params = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER, AmapPageType.ROUTE);
 // 启动组件
